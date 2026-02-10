@@ -8,8 +8,12 @@ from ai.llm_skill_extractor import extract_skills_llm
 app = FastAPI(title="Enterprise AI Job Platform")
 
 
-class TextRequest(BaseModel):
-    text: str
+class PredictionResponse(BaseModel):
+    input_text: str
+    skills_found: list[str]
+    skills_count: int
+    extraction_source: str
+
 
 
 @app.get("/")
@@ -22,8 +26,9 @@ def health():
     return {"status": "ok"}
 
 
-@app.post("/predict")
+@app.post("/predict", response_model=PredictionResponse)
 def predict(req: TextRequest):
+
     """
     Extract skills from input text.
     Uses LLM if enabled, otherwise falls back to rule-based extraction.
@@ -42,9 +47,10 @@ def predict(req: TextRequest):
         skills_found = extract_skills(req.text)
         source = "rule_based"
 
-    return {
-        "input_text": req.text,
-        "skills_found": skills_found,
-        "skills_count": len(skills_found),
-        "extraction_source": source
-    }
+  return {
+    "input_text": req.text,
+    "skills_found": skills_found,
+    "skills_count": len(skills_found),
+    "extraction_source": source
+}
+
