@@ -1,44 +1,57 @@
-# Enterprise AI Job Platform – Skill Extraction API
+# Enterprise AI Job Platform
 
-A production-style AI backend built with **FastAPI**, **Docker**, and **NLP**, designed to extract technical skills from free-text job descriptions or resumes.
+A production-ready, Dockerized FastAPI backend that extracts and structures skills from resumes using AI-based processing.  
+Designed as a foundation for enterprise hiring platforms, ATS systems, and AI-driven job matching solutions.
 
-This project demonstrates how modern AI systems expose intelligence via REST APIs and are deployed in containerized environments.
 ---
 
-## 🚀 Features
+## 🚀 What This Project Does
 
-- REST API built with FastAPI
-- Real AI logic for skill extraction from text
-- Dockerized backend (production-ready)
-- Clean, scalable project structure
-- Linux / WSL compatible
-- Ready for future upgrades (LLMs, RAG, Vector DBs, Spark)
+This service:
+- Accepts resume text or documents
+- Extracts structured skills using AI logic
+- Exposes clean REST APIs for integration with job platforms
+- Is fully containerized using Docker for production readiness
+
+This project is built with **scalability, modularity, and enterprise use cases** in mind.
+
 ---
 
-## 🛠 Tech Stack
+## 🧠 Why This Matters
 
-- Python 3.10
-- FastAPI
-- Pydantic
-- Docker
-- Uvicorn
-- NLP (rule-based skill extraction)
-- Linux / WSL
+Hiring platforms struggle with:
+- Unstructured resume data
+- Inconsistent skill formats
+- Manual screening inefficiencies
+
+This backend solves that by:
+- Converting raw resume data → structured skill intelligence
+- Enabling AI-powered job matching and analytics
+- Acting as a core service in an enterprise AI hiring stack
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Python, FastAPI
+- **AI Layer:** Custom skill extraction logic (extensible to LLMs / embeddings)
+- **API:** RESTful endpoints
+- **Containerization:** Docker
+- **Architecture:** Modular service-based design
+
 ---
 
 ## 📂 Project Structure
 
+```text
 enterprise-ai-job-platform/
-├── api/
-│   └── main.py              # FastAPI application
-├── ai/
-│   ├── skill_extractor.py   # Skill extraction logic
-│   ├── model.py             # Reserved for future ML models
-│   └── __init__.py
-├── data/                    # Sample / future datasets
-├── spark/                   # Reserved for Spark pipelines
-├── docker/                  # Docker-related configs
-├── Dockerfile
-├── requirements.txt
+│
+├── api/              # FastAPI application and routes
+├── ai/               # AI logic (skill extraction, models)
+├── Dockerfile        # Docker configuration
+├── requirements.txt  # Python dependencies
 └── README.md
+```
+
+
 
