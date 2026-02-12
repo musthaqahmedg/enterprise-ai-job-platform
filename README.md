@@ -53,5 +53,19 @@ enterprise-ai-job-platform/
 └── README.md
 ```
 
+## 🌐 Live Demo
+
+Production API deployed on Render:
+
+Base URL:
+https://enterprise-ai-job-platform.onrender.com
+
+Swagger Documentation:
+https://enterprise-ai-job-platform.onrender.com/docs
+
+Example Endpoints:
+
+POST /predict → Extract skills from resume text  
+POST /match → Calculate skill match score between resume and job description
 
 
