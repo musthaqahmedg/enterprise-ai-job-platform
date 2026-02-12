@@ -1,6 +1,8 @@
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
+from ai.matcher import calculate_match_score
+
 
 from ai.skill_extractor import extract_skills
 from ai.llm_skill_extractor import extract_skills_llm
@@ -31,6 +33,11 @@ class TextRequest(BaseModel):
                 )
             }
         }
+
+class MatchRequest(BaseModel):
+    resume_text: str
+    job_description_text: str
+
 
 
 # ----------- Response Model -----------
@@ -82,4 +89,19 @@ def predict(req: TextRequest):
         "skills_found": skills_found,
         "skills_count": len(skills_found),
         "extraction_source": source,
+    }
+
+@app.post("/match")
+def match(req: MatchRequest):
+
+    resume_skills = extract_skills(req.resume_text)
+    job_skills = extract_skills(req.job_description_text)
+
+    match_result = calculate_match_score(resume_skills, job_skills)
+
+    return {
+        "resume_skills": resume_skills,
+        "job_skills": job_skills,
+        "matched_skills": match_result["matched_skills"],
+        "match_score": match_result["match_score"]
     }
