@@ -4,3 +4,4 @@ pydantic
 scikit-learn
 openai
 pytest
+pypdf
