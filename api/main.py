@@ -6,6 +6,9 @@ from pypdf import PdfReader
 from ai.skill_extractor import extract_skills
 from ai.llm_skill_extractor import extract_skills_llm
 from ai.pdf_parser import extract_text_from_pdf
+from typing import List
+from pydantic import BaseModel
+from ai.matcher import calculate_match_score
 
 
 app = FastAPI(
@@ -35,6 +38,12 @@ class MatchV2Request(BaseModel):
     resume_text: str
     required_skills: list[str]
     optional_skills: list[str] = []
+
+class MatchRequest(BaseModel):
+    resume_skills: List[str]
+    job_skills: List[str]
+
+
 
 
 # ------------------------
@@ -125,19 +134,15 @@ async def predict_pdf(file: UploadFile = File(...)):
 @app.post("/match")
 def match(req: MatchRequest):
 
-    resume_skills = extract_skills(req.resume_text)
-    job_skills = extract_skills(req.job_description_text)
+    result = calculate_match_score(
+        resume_skills=req.resume_skills,
+        job_skills=req.job_skills
+    )
 
-    matched = list(set(resume_skills).intersection(set(job_skills)))
+    return result
 
-    score = round(len(matched) / len(job_skills), 2) if job_skills else 0
 
-    return {
-        "resume_skills": resume_skills,
-        "job_skills": job_skills,
-        "matched_skills": matched,
-        "match_score": score
-    }
+
 
 
 # ------------------------
